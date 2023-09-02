@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 	"os/signal"
-	one_one "producter-consumer/core"
 	"producter-consumer/out"
+	"producter-consumer/test"
 	"syscall"
 )
 
@@ -16,7 +16,8 @@ func main() {
 	//one_one.Exec()
 	//one_one.Test()
 	//one_one.Exec2()
-	one_one.Exec3()
+	//one_one.Exec3()
+	test.Ex()
 	sig := make(chan os.Signal)
 	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
 	<-sig

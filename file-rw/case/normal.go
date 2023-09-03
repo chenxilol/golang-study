@@ -6,6 +6,7 @@ import (
 	"path"
 )
 
+// ReadWriteFiles 用于读取整个文件的内容。
 func ReadWriteFiles() {
 	list := GetFiles(sourceDir)
 	for _, f := range list {

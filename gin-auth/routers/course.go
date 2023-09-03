@@ -8,6 +8,7 @@ import (
 
 func initCourse(c *gin.RouterGroup) {
 	v1 := c.Group("/v1")
+	// 注册中间件，在哪里注册，作用于哪里以及他的下级
 	v1.Use(middleware.Auth())
 	{
 		v1.GET("/course/:id", course.Get)

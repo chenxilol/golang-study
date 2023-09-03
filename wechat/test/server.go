@@ -15,13 +15,12 @@ type Sever struct {
 }
 
 func NewSever(ip string, port int) *Sever {
-	s := Sever{
+	return &Sever{
 		Ip:        ip,
 		Port:      port,
 		OnlineMap: make(map[string]*User),
 		Msg:       make(chan string),
 	}
-	return &s
 }
 func (this *Sever) Star() {
 	listen, err := net.Listen("tcp", fmt.Sprintf("%s:%d", this.Ip, this.Port))

@@ -1,29 +1,28 @@
 package _case
 
 import (
-	"log"
+	"fmt"
 	"os"
 )
 
 const sourceDir = "/Users/a1-6/GolandProjects/file-rw/soucre-file/"
 const destDir = "/Users/a1-6/GolandProjects/file-rw/dest-file/"
 
-func GetFileDir(src string) []string {
+func GetFileDir1(src string) []string {
 
 	// 源文件目录
-
 	dir, err := os.ReadDir(src)
 	if err != nil {
-		log.Fatal("读取文件失败", err)
 		return nil
 	}
-	list := make([]string, 0)
-	for _, f := range dir {
-		if f.IsDir() {
-			continue
+	dirList := make([]string, 0)
+	for _, entry := range dir {
+		if entry.IsDir() {
+			return nil
 		}
-		dir := src + "/" + f.Name()
-		list = append(list, dir)
+		fileName := sourceDir + entry.Name()
+		fmt.Println(fileName)
+		dirList = append(dirList, fileName)
 	}
-	return list
+	return dirList
 }

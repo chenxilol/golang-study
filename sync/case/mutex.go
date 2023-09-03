@@ -8,7 +8,8 @@ import (
 func MutexCase() {
 	//singleRoutine()
 	//many()
-	Sync()
+	//Sync()
+	multipleSafeRoutineByRWMutex()
 }
 
 // 单协程操作
@@ -87,13 +88,57 @@ func Sync() {
 
 // 读写锁
 type cache struct {
-	data map[string]int
+	data map[string]string
 	sync.RWMutex
 }
 
 func newCache() *cache {
 	return &cache{
-		data:    make(map[string]int, 0),
+		data:    make(map[string]string, 0),
 		RWMutex: sync.RWMutex{},
 	}
+}
+func (c *cache) Get1(key string) string {
+	c.RLock()
+	defer c.RUnlock()
+	value, ok := c.data[key]
+	if ok {
+		return value
+	}
+	return ""
+}
+func (c *cache) Set(key, value string) {
+	c.Lock()
+	defer c.Unlock()
+	c.data[key] = value
+
+}
+func multipleSafeRoutineByRWMutex() {
+	c := newCache()
+	wg := sync.WaitGroup{}
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		c.Set("name", "chenXi")
+	}()
+
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+		i := i
+		go func() {
+			defer wg.Done()
+			c.Set(fmt.Sprintf("chen+%d", i), fmt.Sprintf("chen+%d", i))
+		}()
+	}
+	// 这里要休眠或者加入sync.wait等待协程运行完成
+	wg.Wait()
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+		i := i
+		go func() {
+			defer wg.Done()
+			fmt.Println(c.Get1(fmt.Sprintf("chen+%d", i)))
+		}()
+	}
+	wg.Wait()
 }

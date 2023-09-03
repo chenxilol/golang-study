@@ -3,12 +3,14 @@ package _case
 import (
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"path"
 )
 
 func CopyDirToDir() {
-	dir := GetFileDir(sourceDir)
+	dir := GetFileDir1(sourceDir)
+
 	for _, s := range dir {
 		_, filelName := path.Split(s)
 		distDirs := destDir + "copy/" + filelName
@@ -16,6 +18,7 @@ func CopyDirToDir() {
 
 	}
 }
+
 func CopyFiles(src, dist string) (int64, error) {
 	scrFile, err := os.Open(src)
 	if err != nil {
@@ -40,4 +43,59 @@ func CopyFiles(src, dist string) (int64, error) {
 	}(dst)
 	return io.Copy(dst, scrFile)
 
+}
+
+func CopyDirToDir1() {
+	list := GetFileDir1(sourceDir)
+	for _, filename := range list {
+		_, file := path.Split(filename)
+		destName := destDir + "copy/" + file
+		CopyFiles2(filename, destName)
+	}
+}
+
+// CopyFiles1 用readFile he writeFile 进行一次性读写
+func CopyFiles1(src, destName string) {
+	file, err := os.ReadFile(src)
+	if err != nil {
+		return
+	}
+	err = os.WriteFile(destName, file, 0644)
+	if err != nil {
+		return
+	}
+
+}
+
+// CopyFiles2 提供了更多的控制和灵活性，适用于更复杂的文件操作，他可以灵活的对文件的权限进行操作
+
+func CopyFiles2(src, destName string) {
+	open, err := os.Open(src)
+	if err != nil {
+		return
+	}
+	defer func(open *os.File) {
+		err := open.Close()
+		if err != nil {
+		}
+	}(open)
+	file, err := os.OpenFile(destName, os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return
+	}
+	// 这里直接全部复制io流，也可以编写边读
+	//io.Copy(file, open)
+	data := make([]byte, 1024)
+	for {
+		n, err := open.Read(data)
+		if err != nil && err != io.EOF {
+			log.Fatal(err)
+			return
+		}
+		if n == 0 {
+			break
+		}
+		file.Write(data[:n])
+
+	}
 }

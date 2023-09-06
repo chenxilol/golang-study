@@ -17,6 +17,7 @@ type User struct {
 
 // NewUser 创建一个用户的API
 func NewUser(conn net.Conn, server *Server) *User {
+	//这是得到用户的IP地址
 	userAddr := conn.RemoteAddr().String()
 	user := &User{
 		Name:   userAddr,

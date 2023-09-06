@@ -49,13 +49,14 @@ func ConCurrentSync() {
 	}()
 }
 
-// 通知协程退出与多路复用
+// NoticeAndMultiplexing 通知协程退出与多路复用
 func NoticeAndMultiplexing() {
 	ch := make(chan int, 0)
 	strch := make(chan string, 0)
 	done := make(chan struct{}, 0)
 	go noticeAndMultiplexing1(ch)
 	go noticeAndMultiplexing2(strch)
+	// chan的多路复用
 	go noticeAndMultiplexing3(ch, strch, done)
 	time.Sleep(time.Second * 5)
 	close(done)

@@ -26,9 +26,10 @@ func NewServer(ip string, port int) *Server {
 	}
 }
 
-func (this *Server) Handler(conn net.Conn) {
+// Handler 消息中间件
+func (s *Server) Handler(conn net.Conn) {
 	// 当前连接的业务
-	user := NewUser(conn, this)
+	user := NewUser(conn, s)
 	// 用户上线，将用户加入到online-map中
 	user.Online()
 
@@ -42,6 +43,7 @@ func (this *Server) Handler(conn net.Conn) {
 				user.Offline()
 				return
 			}
+			// 因为字节最后一个字符为EOF
 			if err != nil && err != io.EOF {
 				fmt.Println("conn.Read err:", err)
 				return
@@ -69,22 +71,22 @@ func (this *Server) Handler(conn net.Conn) {
 }
 
 // ListenMessage 监听Message广播消息channel的goroutine，一旦有消息就发送给全部的在线user
-func (this *Server) ListenMessage() {
+func (s *Server) ListenMessage() {
 	for {
-		msg := <-this.Message
+		msg := <-s.Message
 		// 将msg发送给全部的在线user
-		this.SyncMap.Lock()
-		for _, cli := range this.OnlineMap {
+		s.SyncMap.Lock()
+		for _, cli := range s.OnlineMap {
 			cli.C <- msg
 		}
-		this.SyncMap.Unlock()
+		s.SyncMap.Unlock()
 	}
 }
 
 // BroadCast 广播消息的方法
-func (this *Server) BroadCast(user *User, msg string) {
+func (s *Server) BroadCast(user *User, msg string) {
 	sendMsg := "[" + user.Addr + "]" + user.Name + ":" + msg
-	this.Message <- sendMsg
+	s.Message <- sendMsg
 }
 
 // Start 启动服务器的接口
@@ -99,7 +101,7 @@ func (s *Server) Start() {
 	// 启动监听Message的goroutine
 	go s.ListenMessage()
 	for {
-		// 等待客户端连接
+		// 等待客户端连接，只有链接成功才会返回conn
 		conn, err := listen.Accept()
 		if err != nil {
 			fmt.Println("listen.Accept err:", err)

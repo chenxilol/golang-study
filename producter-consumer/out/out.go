@@ -19,8 +19,8 @@ func NewOut() *Out {
 
 func Println(i interface{}) {
 	out.data <- i
-
 }
+
 func (o *Out) OutPut() {
 	for {
 		select {

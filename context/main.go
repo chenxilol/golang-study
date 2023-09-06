@@ -1,7 +1,7 @@
 package main
 
 import (
-	_case "GolandProjects/context/case"
+	"GolandPeojects/context/case"
 	"context"
 	"os"
 	"os/signal"

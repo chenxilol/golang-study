@@ -9,6 +9,7 @@ import (
 func ContextCase() {
 	ctx := context.Background()
 	ctx = context.WithValue(ctx, "desc", "ContextCase")
+	// 消息的回溯，这里设置的10秒
 	ctx, cancel := context.WithTimeout(ctx, time.Second*10)
 	defer cancel()
 	//done := make(chan struct{})
@@ -40,7 +41,7 @@ func calculate(ctx context.Context, data chan []int) {
 			ch1 <- item
 		case <-ctx.Done():
 			desc := ctx.Value("desc").(string)
-			fmt.Printf("calculate 协程退出， context desc :%s,错误消息%s \n", desc, ctx.Err())
+			fmt.Printf("calculate 协程退出， context-text desc :%s,错误消息%s \n", desc, ctx.Err())
 			return
 		}
 	}
@@ -55,7 +56,7 @@ func sumContext(ctx context.Context, data <-chan []int) {
 			fmt.Printf("%d + %d = %d \n", a, b, res)
 		case <-ctx.Done():
 			desc := ctx.Value("desc").(string)
-			fmt.Printf("sumContext 协程退出， context desc ：%s,错误消息%s \n", desc, ctx.Err())
+			fmt.Printf("sumContext 协程退出， context-text desc ：%s,错误消息%s \n", desc, ctx.Err())
 			return
 		}
 	}
@@ -70,7 +71,7 @@ func multiContext(ctx context.Context, data <-chan []int) {
 			fmt.Printf("%d * %d = %d \n", a, b, res)
 		case <-ctx.Done():
 			desc := ctx.Value("desc").(string)
-			fmt.Printf("multiContext 协程退出， context desc ：%s,错误消息%s \n ", desc, ctx.Err())
+			fmt.Printf("multiContext 协程退出， context-text desc ：%s,错误消息%s \n ", desc, ctx.Err())
 			return
 		}
 	}

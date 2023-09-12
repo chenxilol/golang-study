@@ -1,8 +1,8 @@
 package main
 
 import (
-	"admin/core"
-	"admin/global"
+	"demo/admin/core"
+	"demo/admin/global"
 	"fmt"
 )
 

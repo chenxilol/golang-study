@@ -1,6 +1,6 @@
 package main
 
-import _case "file-rw/case"
+import _case "demo/file-rw/case"
 
 func main() {
 	//_ = _case.GetFiles("/Users/a1-6/GolandProjects/file-rw")

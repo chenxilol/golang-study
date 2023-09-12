@@ -1,8 +1,8 @@
 package core
 
 import (
-	"admin/core/internal"
-	"admin/global"
+	"demo/admin/core/internal"
+	"demo/admin/global"
 	"flag"
 	"fmt"
 	"github.com/fsnotify/fsnotify"

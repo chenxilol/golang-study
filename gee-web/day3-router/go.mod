@@ -1,4 +1,4 @@
-module day02-router
+module day03-router
 
 go 1.21
 

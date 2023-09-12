@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gin-redis-cluster/routers"
+	"demo/gin-auth/routers"
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,4 +1,4 @@
-module producter-consumer
+module demo
 
 go 1.20
 

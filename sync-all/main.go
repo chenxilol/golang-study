@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"example.com/myproject/case"
+	"demo/sync-all/case"
 	"os"
 	"os/signal"
 )

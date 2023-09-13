@@ -4,12 +4,20 @@ package hello_grpc;     // 指定默认包名
 // 指定golang包名
 option go_package = "/hello_grpc";
 
-//定义rpc服务
+//定义rpc服务, rpc 就是定义一个方法
 service HelloService {
   // 定义函数
   rpc SayHello (HelloRequest) returns (HelloResponse) {}
+  rpc AddNum (AddNumRequest) returns (AddNumResponse) {}
+}
+message AddNumRequest{
+  int32 a = 1;
+  int32 b = 2;
 }
 
+message AddNumResponse{
+  int32 sum = 1;
+}
 // HelloRequest 请求内容
 message HelloRequest {
   string name = 1;
@@ -22,3 +30,26 @@ message HelloResponse{
   string message = 2;
 }
 
+// 数组类型
+message ArrayRequest{
+  repeated int32 data = 1; // repeated 表示数组 data 数组名 int32 数组类型
+  repeated string names = 2;
+}
+message ArrayRequest1{
+  repeated int32 data = 1;
+  repeated AddNumRequest names = 2;
+}
+
+// map 类型
+message MapRequest{
+  map<string, string> data = 1; // map<key类型, value类型> map名
+}
+
+// 嵌套类型 一个message中可以嵌套另一个message,repeated也可以嵌套,他们的区别是repeated是数组,而message是对象
+message Q1 {
+  message Q2 {
+     string name = 1;
+  }
+  string name = 1;
+   Q2 q2 = 2;
+}

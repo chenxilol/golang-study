@@ -19,6 +19,12 @@ func (HelloGrpc) SayHello(ctx context.Context, req *hello_grpc.HelloRequest) (re
 		Message: "进军grpc",
 	}, nil
 }
+func (HelloGrpc) AddNum(ctx context.Context, req *hello_grpc.AddNumRequest) (res *hello_grpc.AddNumResponse, err error) {
+	sum := req.A + req.B
+	return &hello_grpc.AddNumResponse{
+		Sum: sum,
+	}, nil
+}
 func main() {
 	listen, err := net.Listen("tcp", ":8080")
 	if err != nil {
@@ -27,6 +33,7 @@ func main() {
 	// 先初始化grpc
 	s := grpc.NewServer()
 	sever := HelloGrpc{}
+
 	hello_grpc.RegisterHelloServiceServer(s, &sever)
 	fmt.Printf("grpc sever start ：8080")
 	err = s.Serve(listen)

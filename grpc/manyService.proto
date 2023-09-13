@@ -1,0 +1,20 @@
+syntax = "proto3"; // 指定proto版本
+package many_service_grpc;     // 指定默认包名
+
+// 指定golang包名
+option go_package = "/many_service_grpc";
+
+service ManyServiceOne{
+  rpc Sort(BytesRequest) returns (BytesResponse) {}
+}
+
+service ManyServiceOne1{
+  rpc Sort1(BytesRequest) returns (BytesResponse) {}
+}
+
+message BytesRequest{
+  repeated int32  data = 1 ;
+}
+message BytesResponse{
+  repeated int32  dataSort = 1;
+}

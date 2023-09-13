@@ -39,6 +39,7 @@ func main() {
 	//rdb.LPush(ctx, "goRedisTestList", "1", "2", "3", "4", "5")
 	//val := rdb.LRange(ctx, "goRedisTestList", 0, -1).Val()
 	//fmt.Println(val)
+
 	sub := rdb.Subscribe(ctx, "channel1")
 	for ch := range sub.Channel() {
 		fmt.Println(ch.Channel)

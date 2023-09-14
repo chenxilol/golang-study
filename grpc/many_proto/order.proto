@@ -1,0 +1,9 @@
+syntax = "proto3"; // 指定proto版本
+package proto;     // 指定默认包名
+// 指定golang包名
+import "common.proto";
+option go_package = "/proto";
+
+service OrderMessage{
+  rpc Print(Request) returns (Response){}
+}

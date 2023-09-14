@@ -1,0 +1,12 @@
+syntax = "proto3"; // 指定proto版本
+package proto;     // 指定默认包名
+// 指定golang包名
+option go_package = "/proto";
+
+message Request{
+  string name = 1;
+}
+
+message  Response{
+  string message = 1;
+}

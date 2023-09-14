@@ -5,10 +5,16 @@ package hello_grpc;     // 指定默认包名
 option go_package = "/hello_grpc";
 
 //定义rpc服务, rpc 就是定义一个方法
-service HelloService {
-  // 定义函数
-  rpc SayHello (HelloRequest) returns (HelloResponse) {}
-  rpc AddNum (AddNumRequest) returns (AddNumResponse) {}
+service Echo {
+  // UnaryAPI
+  rpc SayHello(HelloRequest) returns (HelloResponse) {}
+  rpc AddNum(AddNumRequest) returns (AddNumResponse){}
+  // SServerStreaming
+  rpc ServerStreamingEcho(HelloRequest) returns (stream HelloResponse) {}
+  // ClientStreamingE
+  rpc ClientStreamingEcho(stream HelloRequest) returns (HelloResponse) {}
+  // BidirectionalStreaming
+  rpc BidirectionalStreamingEcho(stream HelloRequest) returns (stream HelloResponse) {}
 }
 message AddNumRequest{
   int32 a = 1;

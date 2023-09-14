@@ -397,6 +397,7 @@ func (x *MapRequest) GetData() map[string]string {
 	return nil
 }
 
+// 嵌套类型 一个message中可以嵌套另一个message,repeated也可以嵌套,他们的区别是repeated是数组,而message是对象
 type Q1 struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -538,18 +539,33 @@ var file_hello_proto_rawDesc = []byte{
 	0x0a, 0x02, 0x71, 0x32, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x68, 0x65, 0x6c,
 	0x6c, 0x6f, 0x5f, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x51, 0x31, 0x2e, 0x51, 0x32, 0x52, 0x02, 0x71,
 	0x32, 0x1a, 0x18, 0x0a, 0x02, 0x51, 0x32, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x32, 0x94, 0x01, 0x0a, 0x0c,
-	0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x41, 0x0a, 0x08,
-	0x53, 0x61, 0x79, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x12, 0x18, 0x2e, 0x68, 0x65, 0x6c, 0x6c, 0x6f,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x32, 0x85, 0x03, 0x0a, 0x04,
+	0x45, 0x63, 0x68, 0x6f, 0x12, 0x41, 0x0a, 0x08, 0x53, 0x61, 0x79, 0x48, 0x65, 0x6c, 0x6c, 0x6f,
+	0x12, 0x18, 0x2e, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x5f, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x48, 0x65,
+	0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x19, 0x2e, 0x68, 0x65, 0x6c,
+	0x6c, 0x6f, 0x5f, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x41, 0x0a, 0x06, 0x41, 0x64, 0x64, 0x4e, 0x75,
+	0x6d, 0x12, 0x19, 0x2e, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x5f, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x41,
+	0x64, 0x64, 0x4e, 0x75, 0x6d, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x68,
+	0x65, 0x6c, 0x6c, 0x6f, 0x5f, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x41, 0x64, 0x64, 0x4e, 0x75, 0x6d,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x4e, 0x0a, 0x13, 0x53, 0x65,
+	0x72, 0x76, 0x65, 0x72, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x69, 0x6e, 0x67, 0x45, 0x63, 0x68,
+	0x6f, 0x12, 0x18, 0x2e, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x5f, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x48,
+	0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x19, 0x2e, 0x68, 0x65,
+	0x6c, 0x6c, 0x6f, 0x5f, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x30, 0x01, 0x12, 0x4e, 0x0a, 0x13, 0x43, 0x6c,
+	0x69, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x69, 0x6e, 0x67, 0x45, 0x63, 0x68,
+	0x6f, 0x12, 0x18, 0x2e, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x5f, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x48,
+	0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x19, 0x2e, 0x68, 0x65,
+	0x6c, 0x6c, 0x6f, 0x5f, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x28, 0x01, 0x12, 0x57, 0x0a, 0x1a, 0x42, 0x69,
+	0x64, 0x69, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x61, 0x6c, 0x53, 0x74, 0x72, 0x65, 0x61,
+	0x6d, 0x69, 0x6e, 0x67, 0x45, 0x63, 0x68, 0x6f, 0x12, 0x18, 0x2e, 0x68, 0x65, 0x6c, 0x6c, 0x6f,
 	0x5f, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65,
 	0x73, 0x74, 0x1a, 0x19, 0x2e, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x5f, 0x67, 0x72, 0x70, 0x63, 0x2e,
-	0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12,
-	0x41, 0x0a, 0x06, 0x41, 0x64, 0x64, 0x4e, 0x75, 0x6d, 0x12, 0x19, 0x2e, 0x68, 0x65, 0x6c, 0x6c,
-	0x6f, 0x5f, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x41, 0x64, 0x64, 0x4e, 0x75, 0x6d, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x5f, 0x67, 0x72, 0x70,
-	0x63, 0x2e, 0x41, 0x64, 0x64, 0x4e, 0x75, 0x6d, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x22, 0x00, 0x42, 0x0d, 0x5a, 0x0b, 0x2f, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x5f, 0x67, 0x72, 0x70,
-	0x63, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x28,
+	0x01, 0x30, 0x01, 0x42, 0x0d, 0x5a, 0x0b, 0x2f, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x5f, 0x67, 0x72,
+	0x70, 0x63, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -581,12 +597,18 @@ var file_hello_proto_depIdxs = []int32{
 	0, // 0: hello_grpc.ArrayRequest1.names:type_name -> hello_grpc.AddNumRequest
 	8, // 1: hello_grpc.MapRequest.data:type_name -> hello_grpc.MapRequest.DataEntry
 	9, // 2: hello_grpc.Q1.q2:type_name -> hello_grpc.Q1.Q2
-	2, // 3: hello_grpc.HelloService.SayHello:input_type -> hello_grpc.HelloRequest
-	0, // 4: hello_grpc.HelloService.AddNum:input_type -> hello_grpc.AddNumRequest
-	3, // 5: hello_grpc.HelloService.SayHello:output_type -> hello_grpc.HelloResponse
-	1, // 6: hello_grpc.HelloService.AddNum:output_type -> hello_grpc.AddNumResponse
-	5, // [5:7] is the sub-list for method output_type
-	3, // [3:5] is the sub-list for method input_type
+	2, // 3: hello_grpc.Echo.SayHello:input_type -> hello_grpc.HelloRequest
+	0, // 4: hello_grpc.Echo.AddNum:input_type -> hello_grpc.AddNumRequest
+	2, // 5: hello_grpc.Echo.ServerStreamingEcho:input_type -> hello_grpc.HelloRequest
+	2, // 6: hello_grpc.Echo.ClientStreamingEcho:input_type -> hello_grpc.HelloRequest
+	2, // 7: hello_grpc.Echo.BidirectionalStreamingEcho:input_type -> hello_grpc.HelloRequest
+	3, // 8: hello_grpc.Echo.SayHello:output_type -> hello_grpc.HelloResponse
+	1, // 9: hello_grpc.Echo.AddNum:output_type -> hello_grpc.AddNumResponse
+	3, // 10: hello_grpc.Echo.ServerStreamingEcho:output_type -> hello_grpc.HelloResponse
+	3, // 11: hello_grpc.Echo.ClientStreamingEcho:output_type -> hello_grpc.HelloResponse
+	3, // 12: hello_grpc.Echo.BidirectionalStreamingEcho:output_type -> hello_grpc.HelloResponse
+	8, // [8:13] is the sub-list for method output_type
+	3, // [3:8] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name
 	3, // [3:3] is the sub-list for extension extendee
 	0, // [0:3] is the sub-list for field type_name
@@ -735,112 +757,320 @@ var _ grpc.ClientConnInterface
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion6
 
-// HelloServiceClient is the client API for HelloService service.
+// EchoClient is the client API for Echo service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type HelloServiceClient interface {
-	// 定义函数
+type EchoClient interface {
+	// UnaryAPI
 	SayHello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error)
 	AddNum(ctx context.Context, in *AddNumRequest, opts ...grpc.CallOption) (*AddNumResponse, error)
+	// SServerStreaming
+	ServerStreamingEcho(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (Echo_ServerStreamingEchoClient, error)
+	// ClientStreamingE
+	ClientStreamingEcho(ctx context.Context, opts ...grpc.CallOption) (Echo_ClientStreamingEchoClient, error)
+	// BidirectionalStreaming
+	BidirectionalStreamingEcho(ctx context.Context, opts ...grpc.CallOption) (Echo_BidirectionalStreamingEchoClient, error)
 }
 
-type helloServiceClient struct {
+type echoClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewHelloServiceClient(cc grpc.ClientConnInterface) HelloServiceClient {
-	return &helloServiceClient{cc}
+func NewEchoClient(cc grpc.ClientConnInterface) EchoClient {
+	return &echoClient{cc}
 }
 
-func (c *helloServiceClient) SayHello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error) {
+func (c *echoClient) SayHello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error) {
 	out := new(HelloResponse)
-	err := c.cc.Invoke(ctx, "/hello_grpc.HelloService/SayHello", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/hello_grpc.Echo/SayHello", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *helloServiceClient) AddNum(ctx context.Context, in *AddNumRequest, opts ...grpc.CallOption) (*AddNumResponse, error) {
+func (c *echoClient) AddNum(ctx context.Context, in *AddNumRequest, opts ...grpc.CallOption) (*AddNumResponse, error) {
 	out := new(AddNumResponse)
-	err := c.cc.Invoke(ctx, "/hello_grpc.HelloService/AddNum", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/hello_grpc.Echo/AddNum", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// HelloServiceServer is the server API for HelloService service.
-type HelloServiceServer interface {
-	// 定义函数
+func (c *echoClient) ServerStreamingEcho(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (Echo_ServerStreamingEchoClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_Echo_serviceDesc.Streams[0], "/hello_grpc.Echo/ServerStreamingEcho", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &echoServerStreamingEchoClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Echo_ServerStreamingEchoClient interface {
+	Recv() (*HelloResponse, error)
+	grpc.ClientStream
+}
+
+type echoServerStreamingEchoClient struct {
+	grpc.ClientStream
+}
+
+func (x *echoServerStreamingEchoClient) Recv() (*HelloResponse, error) {
+	m := new(HelloResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *echoClient) ClientStreamingEcho(ctx context.Context, opts ...grpc.CallOption) (Echo_ClientStreamingEchoClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_Echo_serviceDesc.Streams[1], "/hello_grpc.Echo/ClientStreamingEcho", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &echoClientStreamingEchoClient{stream}
+	return x, nil
+}
+
+type Echo_ClientStreamingEchoClient interface {
+	Send(*HelloRequest) error
+	CloseAndRecv() (*HelloResponse, error)
+	grpc.ClientStream
+}
+
+type echoClientStreamingEchoClient struct {
+	grpc.ClientStream
+}
+
+func (x *echoClientStreamingEchoClient) Send(m *HelloRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *echoClientStreamingEchoClient) CloseAndRecv() (*HelloResponse, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(HelloResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *echoClient) BidirectionalStreamingEcho(ctx context.Context, opts ...grpc.CallOption) (Echo_BidirectionalStreamingEchoClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_Echo_serviceDesc.Streams[2], "/hello_grpc.Echo/BidirectionalStreamingEcho", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &echoBidirectionalStreamingEchoClient{stream}
+	return x, nil
+}
+
+type Echo_BidirectionalStreamingEchoClient interface {
+	Send(*HelloRequest) error
+	Recv() (*HelloResponse, error)
+	grpc.ClientStream
+}
+
+type echoBidirectionalStreamingEchoClient struct {
+	grpc.ClientStream
+}
+
+func (x *echoBidirectionalStreamingEchoClient) Send(m *HelloRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *echoBidirectionalStreamingEchoClient) Recv() (*HelloResponse, error) {
+	m := new(HelloResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+// EchoServer is the server API for Echo service.
+type EchoServer interface {
+	// UnaryAPI
 	SayHello(context.Context, *HelloRequest) (*HelloResponse, error)
 	AddNum(context.Context, *AddNumRequest) (*AddNumResponse, error)
+	// SServerStreaming
+	ServerStreamingEcho(*HelloRequest, Echo_ServerStreamingEchoServer) error
+	// ClientStreamingE
+	ClientStreamingEcho(Echo_ClientStreamingEchoServer) error
+	// BidirectionalStreaming
+	BidirectionalStreamingEcho(Echo_BidirectionalStreamingEchoServer) error
 }
 
-// UnimplementedHelloServiceServer can be embedded to have forward compatible implementations.
-type UnimplementedHelloServiceServer struct {
+// UnimplementedEchoServer can be embedded to have forward compatible implementations.
+type UnimplementedEchoServer struct {
 }
 
-func (*UnimplementedHelloServiceServer) SayHello(context.Context, *HelloRequest) (*HelloResponse, error) {
+func (*UnimplementedEchoServer) SayHello(context.Context, *HelloRequest) (*HelloResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SayHello not implemented")
 }
-func (*UnimplementedHelloServiceServer) AddNum(context.Context, *AddNumRequest) (*AddNumResponse, error) {
+func (*UnimplementedEchoServer) AddNum(context.Context, *AddNumRequest) (*AddNumResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddNum not implemented")
 }
-
-func RegisterHelloServiceServer(s *grpc.Server, srv HelloServiceServer) {
-	s.RegisterService(&_HelloService_serviceDesc, srv)
+func (*UnimplementedEchoServer) ServerStreamingEcho(*HelloRequest, Echo_ServerStreamingEchoServer) error {
+	return status.Errorf(codes.Unimplemented, "method ServerStreamingEcho not implemented")
+}
+func (*UnimplementedEchoServer) ClientStreamingEcho(Echo_ClientStreamingEchoServer) error {
+	return status.Errorf(codes.Unimplemented, "method ClientStreamingEcho not implemented")
+}
+func (*UnimplementedEchoServer) BidirectionalStreamingEcho(Echo_BidirectionalStreamingEchoServer) error {
+	return status.Errorf(codes.Unimplemented, "method BidirectionalStreamingEcho not implemented")
 }
 
-func _HelloService_SayHello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func RegisterEchoServer(s *grpc.Server, srv EchoServer) {
+	s.RegisterService(&_Echo_serviceDesc, srv)
+}
+
+func _Echo_SayHello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(HelloRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HelloServiceServer).SayHello(ctx, in)
+		return srv.(EchoServer).SayHello(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/hello_grpc.HelloService/SayHello",
+		FullMethod: "/hello_grpc.Echo/SayHello",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HelloServiceServer).SayHello(ctx, req.(*HelloRequest))
+		return srv.(EchoServer).SayHello(ctx, req.(*HelloRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _HelloService_AddNum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Echo_AddNum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddNumRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HelloServiceServer).AddNum(ctx, in)
+		return srv.(EchoServer).AddNum(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/hello_grpc.HelloService/AddNum",
+		FullMethod: "/hello_grpc.Echo/AddNum",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HelloServiceServer).AddNum(ctx, req.(*AddNumRequest))
+		return srv.(EchoServer).AddNum(ctx, req.(*AddNumRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _HelloService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "hello_grpc.HelloService",
-	HandlerType: (*HelloServiceServer)(nil),
+func _Echo_ServerStreamingEcho_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(HelloRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(EchoServer).ServerStreamingEcho(m, &echoServerStreamingEchoServer{stream})
+}
+
+type Echo_ServerStreamingEchoServer interface {
+	Send(*HelloResponse) error
+	grpc.ServerStream
+}
+
+type echoServerStreamingEchoServer struct {
+	grpc.ServerStream
+}
+
+func (x *echoServerStreamingEchoServer) Send(m *HelloResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _Echo_ClientStreamingEcho_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(EchoServer).ClientStreamingEcho(&echoClientStreamingEchoServer{stream})
+}
+
+type Echo_ClientStreamingEchoServer interface {
+	SendAndClose(*HelloResponse) error
+	Recv() (*HelloRequest, error)
+	grpc.ServerStream
+}
+
+type echoClientStreamingEchoServer struct {
+	grpc.ServerStream
+}
+
+func (x *echoClientStreamingEchoServer) SendAndClose(m *HelloResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *echoClientStreamingEchoServer) Recv() (*HelloRequest, error) {
+	m := new(HelloRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func _Echo_BidirectionalStreamingEcho_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(EchoServer).BidirectionalStreamingEcho(&echoBidirectionalStreamingEchoServer{stream})
+}
+
+type Echo_BidirectionalStreamingEchoServer interface {
+	Send(*HelloResponse) error
+	Recv() (*HelloRequest, error)
+	grpc.ServerStream
+}
+
+type echoBidirectionalStreamingEchoServer struct {
+	grpc.ServerStream
+}
+
+func (x *echoBidirectionalStreamingEchoServer) Send(m *HelloResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *echoBidirectionalStreamingEchoServer) Recv() (*HelloRequest, error) {
+	m := new(HelloRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+var _Echo_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "hello_grpc.Echo",
+	HandlerType: (*EchoServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "SayHello",
-			Handler:    _HelloService_SayHello_Handler,
+			Handler:    _Echo_SayHello_Handler,
 		},
 		{
 			MethodName: "AddNum",
-			Handler:    _HelloService_AddNum_Handler,
+			Handler:    _Echo_AddNum_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "ServerStreamingEcho",
+			Handler:       _Echo_ServerStreamingEcho_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "ClientStreamingEcho",
+			Handler:       _Echo_ClientStreamingEcho_Handler,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "BidirectionalStreamingEcho",
+			Handler:       _Echo_BidirectionalStreamingEcho_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+	},
 	Metadata: "hello.proto",
 }

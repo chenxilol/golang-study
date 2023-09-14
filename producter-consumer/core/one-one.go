@@ -1,7 +1,7 @@
 package core
 
 import (
-	"producter-consumer/out"
+	"demo/out"
 	"sync"
 )
 

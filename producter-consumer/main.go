@@ -1,9 +1,9 @@
 package main
 
 import (
+	"demo/test"
 	"os"
 	"os/signal"
-	"producter-consumer/test"
 	"syscall"
 )
 

@@ -1,8 +1,8 @@
 package core
 
 import (
+	"demo/out"
 	"fmt"
-	"producter-consumer/out"
 	"time"
 )
 

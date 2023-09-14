@@ -63,7 +63,16 @@ func isPalindrome(x int) bool {
 }
 func main() {
 	//	myMap := New()
-	fmt.Println(isPalindrome(121))
+
+	//fmt.Println(isPalindrome(121))
+	fmt.Println(isPalindrome1(-121))
 	//	myMap.Put(1, "sadf")
 	//fmt.Println(myMap.Get(2, time.Second*4))
+}
+func isPalindrome1(x int) bool {
+	b := x % 11
+	if b == 0 {
+		return true
+	}
+	return false
 }

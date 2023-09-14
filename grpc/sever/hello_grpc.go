@@ -3,15 +3,18 @@ package main
 import (
 	"context"
 	"demo/grpc/hello_grpc"
+	"errors"
 	"fmt"
 	"google.golang.org/grpc"
 	"io"
 	"log"
 	"net"
+	"strings"
 	"sync"
 )
 
 type HelloGrpc struct {
+	hello_grpc.EchoServer
 }
 
 func (HelloGrpc) SayHello(ctx context.Context, req *hello_grpc.HelloRequest) (res *hello_grpc.HelloResponse, err error) {
@@ -123,6 +126,14 @@ func main() {
 		log.Fatal(err)
 	}
 	// 先初始化grpc
+	grpc.WithUnaryInterceptor(func(ctx context.Context, method string, req, reply any, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
+		method = "/protos." + strings.TrimPrefix(method, "/pb.")
+		err := invoker(ctx, method, req, reply, cc, opts...)
+		if err != nil {
+			return errors.New(fmt.Sprintf("GRPC 调用失败,method:%s,err:%v", method, err))
+		}
+		return nil
+	})
 	s := grpc.NewServer()
 	sever := HelloGrpc{}
 

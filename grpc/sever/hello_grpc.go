@@ -12,6 +12,7 @@ import (
 )
 
 type HelloGrpc struct {
+	hello_grpc.EchoServer
 }
 
 func (HelloGrpc) SayHello(ctx context.Context, req *hello_grpc.HelloRequest) (res *hello_grpc.HelloResponse, err error) {

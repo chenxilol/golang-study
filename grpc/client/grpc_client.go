@@ -8,7 +8,6 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 	"io"
 	"log"
-	"sync"
 	"time"
 )
 
@@ -86,6 +85,7 @@ func clientStream(client hello_grpc.EchoClient) {
 			continue
 		}
 	}
+	// 发送完成后，服务端会发送一个响应
 	resp, err := stream.CloseAndRecv()
 	if err != nil {
 		log.Fatal(err)
@@ -104,45 +104,52 @@ func clientStream(client hello_grpc.EchoClient) {
 4. 发送完毕调用 stream.CloseSend()关闭stream 必须调用关闭 否则Server会一直尝试接收数据 一直报错...
 */
 func bidirectionalStream(client hello_grpc.EchoClient) {
-	var wg sync.WaitGroup
+	//var wg sync.WaitGroup
+	var done = make(chan struct{})
 	stream, err := client.BidirectionalStreamingEcho(context.Background())
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
-	wg.Add(1)
+	//	wg.Add(1)
 	go func() {
-		defer wg.Done()
+		//	defer wg.Done()
 		for {
 			req, err := stream.Recv()
 			if err == io.EOF {
 				fmt.Println("Server Closed")
-				break
+				close(done)
+				return
 			}
 			if err != nil {
-				continue
+				close(done)
+				return
 			}
 			fmt.Printf("Recv Data :%v", req.GetMessage())
 		}
 	}()
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		for i := 0; i < 10; i++ {
-			err := stream.Send(&hello_grpc.HelloRequest{
-				Name:    fmt.Sprintf("这是客户端发送的第 %d 次", i),
-				Message: "hello da shuai bi",
-			})
-			if err != nil {
-				return
-			}
-			time.Sleep(time.Second)
-		}
-		err := stream.CloseSend()
+	//	wg.Add(1)
+	//如果使用go 协程，就要考虑协程是否运行完毕，以及协程的关闭顺序
+	//go func() {
+	//defer wg.Done()
+	for i := 0; i < 10; i++ {
+		err := stream.Send(&hello_grpc.HelloRequest{
+			Name:    fmt.Sprintf("这是客户端发送的第 %d 次", i),
+			Message: "hello da shuai bi",
+		})
 		if err != nil {
-			log.Printf("Send error%v", err)
 			return
 		}
-	}()
-	wg.Wait()
+		time.Sleep(time.Second)
+	}
+
+	//}()
+
+	err = stream.CloseSend()
+	<-done
+	if err != nil {
+		log.Printf("Send error%v", err)
+		return
+	}
+
 }

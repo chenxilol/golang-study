@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 )
 
 type Node struct {
@@ -198,19 +199,140 @@ func (l *List) SearchElem(data any) bool {
 	return false
 
 }
+
+// SingleNode 并发安全单链表
+type SingleNode struct {
+	Data any
+	Next *SingleNode
+}
+type SingleList struct {
+	mutex *sync.RWMutex
+	Head  *SingleNode
+	Tail  *SingleNode
+	Size  uint
+}
+
+// Append 后插元素
+func (List *SingleList) Append(node *SingleNode) bool {
+	if node == nil {
+		return false
+	}
+	List.mutex.Lock()
+	defer List.mutex.Unlock()
+	if List.Size == 0 {
+		List.Head = node
+		List.Tail = node
+		List.Size = 1
+		return true
+	}
+	tail := List.Tail
+	tail.Next = node
+	List.Tail = node
+	List.Size += 1
+	return true
+}
+
+// AddElem 前插元素
+func (List *SingleList) AddElem(node *SingleNode) bool {
+	if node == nil {
+		return false
+	}
+	if List.Size == 0 {
+		List.Head = node
+		List.Tail = node
+		List.Size = 1
+		return true
+	}
+	node.Next = List.Head
+	List.Head = node
+	List.Size++
+	return true
+}
+
+// Insert 指定位置插入
+func (List *SingleList) Insert(index uint, node *SingleNode) bool {
+	if node == nil || index > List.Size {
+		return false
+	}
+	List.mutex.Lock()
+	defer List.mutex.Unlock()
+	if index == 0 {
+		node.Next = List.Head
+		List.Head = node
+		List.Size++
+		return true
+	}
+	pre := List.Head
+	var count uint
+	for count = 1; count < index; count++ {
+		pre = pre.Next
+	}
+	next := pre.Next
+	pre.Next = node
+	node.Next = next
+	List.Size++
+	return true
+}
+func NewList() *SingleList {
+	return &SingleList{
+		Size:  0,
+		Head:  nil,
+		Tail:  nil,
+		mutex: new(sync.RWMutex),
+	}
+}
+
+// Display 输出链表
+func (list *SingleList) Display() {
+	if list == nil {
+		fmt.Println("this single list is nil")
+		return
+	}
+	list.mutex.RLock()
+	defer list.mutex.RUnlock()
+	fmt.Printf("this single list size is %d \n", list.Size)
+	ptr := list.Head
+	var i uint
+	for i = 0; i < list.Size; i++ {
+		fmt.Printf("No%3d data is %v\n", i+1, ptr.Data)
+		ptr = ptr.Next
+	}
+}
 func main() {
-	Link := NewLinkList()
-	Link.AppendElemBack(3)
-	Link.AppendElemBack(4)
-	Link.AppendElemBack("5")
-	Link.AppendElemBack(5)
-	Link.AppendElemBack(553)
-	Link.AppendElemBack(5)
-	Link.AppendElemBack(5)
-	Link.AppendElemBack(553)
-	Link.AppendElemBack(5)
-	Link.RemoveElemAll(5)
-	Link.ShowList()
-	Link.InsertForwardElem(2, 8)
-	Link.ShowList()
+	list := NewList()
+	a := &SingleNode{
+		Data: 4,
+	}
+	b := &SingleNode{
+		Data: 41,
+	}
+	c := &SingleNode{
+		Data: 42,
+	}
+	d := &SingleNode{
+		Data: 414,
+	}
+	de := &SingleNode{
+		Data: 4124,
+	}
+	list.AddElem(a)
+	list.AddElem(b)
+	list.AddElem(c)
+	list.Append(de)
+	list.AddElem(d)
+	//
+	//Link := NewLinkList()
+	//Link.AppendElemBack(3)
+	//Link.AppendElemBack(4)
+	//Link.AppendElemBack("5")
+	//Link.AppendElemBack(5)
+	//Link.AppendElemBack(553)
+	//Link.AppendElemBack(5)
+	//Link.AppendElemBack(5)
+	//Link.AppendElemBack(553)
+	//Link.AppendElemBack(5)
+	//Link.RemoveElemAll(5)
+	//Link.ShowList()
+	//Link.InsertForwardElem(2, 8)
+	//Link.ShowList()
 }

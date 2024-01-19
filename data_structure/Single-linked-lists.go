@@ -197,7 +197,6 @@ func (l *List) SearchElem(data any) bool {
 		pre = pre.NodeNext
 	}
 	return false
-
 }
 
 // SingleNode 并发安全单链表
@@ -298,41 +297,47 @@ func (list *SingleList) Display() {
 		ptr = ptr.Next
 	}
 }
+
+// SingleNodeS 使用哨兵实现单链表
+type SingleNodeS struct {
+	Data      any
+	next, pre *SingleNodeS
+	ListS     *SingleListS
+}
+type SingleListS struct {
+	mutex *sync.RWMutex
+	root  SingleNodeS
+	Size  uint
+}
+
+func (l *SingleListS) Init() *SingleListS {
+	l.root.next = &l.root
+	l.root.pre = &l.root
+	l.Size = 0
+	return l
+}
+func (l *SingleListS) inset(e, root *SingleNodeS) {
+	e.next = root.next
+	root.next = e
+	e.next.pre = e
+	e.ListS = l
+	l.Size++
+}
+func NewSingleNodes() *SingleListS {
+	return new(SingleListS).Init()
+}
+func (l *SingleListS) PushBack(v any) {
+	l.inset(&SingleNodeS{Data: v}, l.root.pre)
+}
+func (l *SingleListS) FrontBack(v any) {
+	l.inset(&SingleNodeS{Data: v}, &l.root)
+}
 func main() {
-	list := NewList()
-	a := &SingleNode{
-		Data: 4,
-	}
-	b := &SingleNode{
-		Data: 41,
-	}
-	c := &SingleNode{
-		Data: 42,
-	}
-	d := &SingleNode{
-		Data: 414,
-	}
-	de := &SingleNode{
-		Data: 4124,
-	}
-	list.AddElem(a)
-	list.AddElem(b)
-	list.AddElem(c)
-	list.Append(de)
-	list.AddElem(d)
-	//
-	//Link := NewLinkList()
-	//Link.AppendElemBack(3)
-	//Link.AppendElemBack(4)
-	//Link.AppendElemBack("5")
-	//Link.AppendElemBack(5)
-	//Link.AppendElemBack(553)
-	//Link.AppendElemBack(5)
-	//Link.AppendElemBack(5)
-	//Link.AppendElemBack(553)
-	//Link.AppendElemBack(5)
-	//Link.RemoveElemAll(5)
-	//Link.ShowList()
-	//Link.InsertForwardElem(2, 8)
-	//Link.ShowList()
+	link := NewSingleNodes()
+	link.PushBack("3")
+	link.PushBack("32")
+	link.FrontBack("front")
+	link.FrontBack("frontfsdf")
+	link.PushBack("33")
+	link.PushBack("355")
 }

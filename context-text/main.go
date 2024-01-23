@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	_case "context-text/case"
+	_case "demo/context-text/case"
 	"os"
 	"os/signal"
 )

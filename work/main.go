@@ -61,18 +61,42 @@ func isPalindrome(x int) bool {
 	}
 	return strings.EqualFold(s, string(newb[:]))
 }
-func main() {
-	//	myMap := New()
 
-	//fmt.Println(isPalindrome(121))
-	fmt.Println(isPalindrome1(-121))
-	//	myMap.Put(1, "sadf")
-	//fmt.Println(myMap.Get(2, time.Second*4))
-}
-func isPalindrome1(x int) bool {
-	b := x % 11
-	if b == 0 {
-		return true
-	}
-	return false
+//func main() {
+//	//	myMap := New()
+//
+//	//fmt.Println(isPalindrome(121))
+//	fmt.Println(isPalindrome1(-121))
+//	//	myMap.Put(1, "sadf")
+//	//fmt.Println(myMap.Get(2, time.Second*4))
+//}
+//func isPalindrome1(x int) bool {
+//	b := x % 11
+//	if b == 0 {
+//		return true
+//	}
+//	return false
+//}
+
+func main() {
+	done := make(chan bool, 10)
+	go func() {
+
+		for {
+			select {
+			case <-done:
+				fmt.Println("cancel")
+				return
+			default:
+				fmt.Println("running")
+				time.Sleep(time.Second * 3)
+				fmt.Println("running6")
+				done <- true
+				fmt.Println("running7")
+			}
+		}
+	}()
+
+	time.Sleep(60 * time.Second)
+	fmt.Println("main")
 }

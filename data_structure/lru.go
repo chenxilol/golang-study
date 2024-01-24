@@ -1,10 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
-// Element 创建双链表的节点
-type Node1 struct {
-	next, prev *Node1
+// LruNode创建双链表的节点
+type LruNode struct {
+	next, prev *LruNode
 	Value      any
 	Key        string
 	list       *LRU
@@ -12,8 +14,8 @@ type Node1 struct {
 type LRU struct {
 	Length   uint
 	maxBytes uint
-	Cache    map[string]*Node1
-	root     Node1
+	Cache    map[string]*LruNode
+	root     LruNode
 }
 
 func NewLRU() *LRU {
@@ -23,32 +25,40 @@ func (l *LRU) Init() *LRU {
 	l.root.next = &l.root
 	l.maxBytes = 5
 	l.root.prev = &l.root
-	l.Cache = make(map[string]*Node1)
+	l.Cache = make(map[string]*LruNode)
 	l.Length = 0
 	return l
-}
-func (l *LRU) Append(key string, value any) {
-	if nowNode, ok := l.Cache[key]; !ok {
-		node := Node1{Value: value, Key: key}
-		l.insert(&node, l.root.prev)
-		l.Cache[key] = &node
-		if l.Length > l.maxBytes {
-			l.delete(l.root.prev)
-			delete(l.Cache, l.root.prev.Key)
-		}
-	} else {
-		l.FrontBack(key, value)
-		l.delete(nowNode)
-	}
 }
 
 // FrontBack 前插
 func (l *LRU) FrontBack(k string, v any) {
-	node := &Node1{Value: v, Key: k}
-	l.Cache[k] = node
-	l.insert(node, &l.root)
+	if node, ok := l.Cache[k]; !ok {
+		nodeNow := &LruNode{Value: v, Key: k}
+		l.Cache[k] = nodeNow
+		l.insert(nodeNow, &l.root)
+		if l.Length+1 > l.maxBytes {
+			delete(l.Cache, l.root.prev.Key)
+			l.delete(l.root.prev)
+		}
+	} else {
+		delete(l.Cache, k)
+		nodeNow := &LruNode{Value: v, Key: k}
+		l.Cache[k] = node
+		l.insert(nodeNow, &l.root)
+	}
+
 }
-func (l *LRU) insert(node, root *Node1) {
+
+// GetValue 查找k,v
+func (l *LRU) GetValue(k string) (val any, ok bool) {
+	if node, ok := l.Cache[k]; ok {
+		l.delete(node)
+		l.insert(node, &l.root)
+		return node.Value, ok
+	}
+	return nil, ok
+}
+func (l *LRU) insert(node, root *LruNode) {
 	node.prev = root
 	node.next = root.next
 	node.prev.next = node
@@ -56,7 +66,7 @@ func (l *LRU) insert(node, root *Node1) {
 	l.Length++
 	node.list = l
 }
-func (l *LRU) delete(node *Node1) {
+func (l *LRU) delete(node *LruNode) {
 	node.prev.next = node.next
 	node.next.prev = node.prev
 	l.Length--
@@ -77,13 +87,14 @@ func (l *LRU) PrintlnDList1() {
 }
 func main() {
 	a := NewLRU()
-	a.Append("1", 1)
-	a.Append("2", 2)
-	a.Append("3", 3)
-	a.Append("4", 4)
-	a.Append("5", 5)
-	a.Append("5", 5)
-	a.Append("5", 5)
-	a.Append("5", 5)
+	a.FrontBack("1", 1)
+	a.FrontBack("2", 2)
+	a.FrontBack("3", 3)
+	a.FrontBack("4", 4)
+	a.FrontBack("5", 5)
+	a.FrontBack("5", 5)
+	a.FrontBack("6", 6)
+	a.FrontBack("7", 7)
+	a.GetValue("4")
 	a.PrintlnDList1()
 }

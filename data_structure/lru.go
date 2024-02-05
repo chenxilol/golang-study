@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-// LruNode创建双链表的节点
+// LruNode 创建双链表的节点
 type LruNode struct {
 	next, prev *LruNode
 	Value      any

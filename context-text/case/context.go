@@ -10,7 +10,8 @@ func ContextCase() {
 	ctx := context.Background()
 	ctx = context.WithValue(ctx, "desc", "ContextCase")
 	// 消息的回溯，这里设置的10秒
-	ctx, cancel := context.WithTimeout(ctx, time.Second*10)
+	ctx, cancel := context.WithTimeout(ctx, time.Second*1)
+	//context.AfterFunc(ctx, afterFunc)
 	defer cancel()
 	//done := make(chan struct{})
 	//go f1(done)
@@ -19,7 +20,7 @@ func ContextCase() {
 	//defer close(done)
 	ch := make(chan []int)
 	data := [][]int{
-		{1, 2}, {2, 4},
+		{1, 2}, {2, 4}, {2, 4}, {2, 4},
 	}
 	go calculate(ctx, ch)
 	for i := 0; i < len(data); i++ {
@@ -27,11 +28,13 @@ func ContextCase() {
 	}
 	time.Sleep(10 * time.Second)
 }
+func afterFunc() {
+	fmt.Println("afterFunc")
+}
 func calculate(ctx context.Context, data chan []int) {
 	for {
 		select {
 		case item := <-data:
-			ctx := context.WithValue(ctx, "desc", "calculate")
 			ch := make(chan []int)
 			go sumContext(ctx, ch)
 			ch <- item
@@ -43,6 +46,8 @@ func calculate(ctx context.Context, data chan []int) {
 			desc := ctx.Value("desc").(string)
 			fmt.Printf("calculate 协程退出， context-text desc :%s,错误消息%s \n", desc, ctx.Err())
 			return
+		default:
+
 		}
 	}
 }
@@ -55,8 +60,7 @@ func sumContext(ctx context.Context, data <-chan []int) {
 			res := sum(a, b)
 			fmt.Printf("%d + %d = %d \n", a, b, res)
 		case <-ctx.Done():
-			desc := ctx.Value("desc").(string)
-			fmt.Printf("sumContext 协程退出， context-text desc ：%s,错误消息%s \n", desc, ctx.Err())
+			fmt.Printf("sumContext 协程退出， context-text desc ：%s,错误消息 \n", ctx.Err())
 			return
 		}
 	}
